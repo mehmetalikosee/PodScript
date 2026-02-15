@@ -27,8 +27,8 @@ export async function sendEmail(options: SendEmailOptions): Promise<{ ok: boolea
       from: FROM_EMAIL,
       to,
       subject: options.subject,
-      text: options.text ?? undefined,
-      html: options.html ?? undefined,
+      text: options.text ?? "",
+      ...(options.html && { html: options.html }),
     });
     if (error) return { ok: false, error: error.message };
     return { ok: true };
