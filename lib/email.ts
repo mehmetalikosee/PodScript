@@ -23,13 +23,14 @@ export async function sendEmail(options: SendEmailOptions): Promise<{ ok: boolea
   }
   const to = Array.isArray(options.to) ? options.to : [options.to];
   try {
-    const { error } = await resend.emails.send({
+    const payload = {
       from: FROM_EMAIL,
       to,
       subject: options.subject,
       text: options.text ?? "",
-      ...(options.html && { html: options.html }),
-    });
+      ...(options.html ? { html: options.html } : {}),
+    } as { from: string; to: string[]; subject: string; text: string; html?: string };
+    const { error } = await resend.emails.send(payload);
     if (error) return { ok: false, error: error.message };
     return { ok: true };
   } catch (e) {
