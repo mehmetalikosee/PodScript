@@ -183,8 +183,8 @@ export function PodcastContentPanel({ podcastId, outputs }: PodcastContentPanelP
   function renderContent(content: string | null) {
     if (!content) return <p className="text-muted-foreground text-sm">No content yet.</p>;
     return (
-      <div className="rounded-2xl border border-border/80 bg-card p-6 shadow-sm">
-        <p className="text-sm text-foreground whitespace-pre-wrap leading-relaxed">{content}</p>
+      <div className="rounded-2xl bg-card/80 dark:bg-white/[0.03] border border-border/40 p-8 shadow-[0_1px_2px_rgba(0,0,0,0.04)] dark:shadow-none">
+        <p className="text-[15px] text-foreground/95 whitespace-pre-wrap leading-[1.65]">{content}</p>
       </div>
     );
   }
@@ -192,10 +192,10 @@ export function PodcastContentPanel({ podcastId, outputs }: PodcastContentPanelP
   return (
     <Tabs defaultValue="blog" className="w-full">
       <div className="flex flex-col gap-4 mb-4">
-        {/* Tab bar: full-width scrollable row */}
-        <div className="w-full border border-border/80 rounded-2xl bg-card/50 overflow-hidden">
-          <div className="content-tabs-scroll overflow-x-auto overflow-y-hidden scroll-smooth">
-            <TabsList className="inline-flex h-12 w-max min-w-full items-center gap-1.5 rounded-2xl bg-transparent p-2 pr-8 border-0 h-auto">
+        {/* Tab bar: minimal Apple-style pill row */}
+        <div className="w-full rounded-2xl bg-muted/30 dark:bg-white/[0.02] overflow-hidden">
+          <div className="content-tabs-scroll overflow-x-auto overflow-y-hidden scroll-smooth py-1">
+            <TabsList className="inline-flex h-11 w-max min-w-full items-center gap-1 rounded-2xl bg-transparent p-1.5 pr-8 border-0 h-auto">
               {TAB_CONFIG.map((t) => {
                 const Icon = t.icon;
                 return (
@@ -203,12 +203,12 @@ export function PodcastContentPanel({ podcastId, outputs }: PodcastContentPanelP
                     key={t.value}
                     value={t.value}
                     className={cn(
-                      "rounded-xl px-4 py-2.5 h-auto flex items-center gap-2 shrink-0 text-sm font-medium transition-colors",
-                      "text-muted-foreground hover:text-foreground hover:bg-muted/80",
-                      "data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-sm data-[state=active]:hover:bg-primary data-[state=active]:hover:text-primary-foreground"
+                      "rounded-xl px-3.5 py-2 h-auto flex items-center gap-2 shrink-0 text-[13px] font-medium transition-all duration-200",
+                      "text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5",
+                      "data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm data-[state=active]:hover:bg-background dark:data-[state=active]:bg-white/10 dark:data-[state=active]:text-foreground"
                     )}
                   >
-                    <Icon className="h-4 w-4 shrink-0" />
+                    <Icon className="h-[15px] w-[15px] shrink-0 opacity-90" />
                     <span>{t.label}</span>
                   </TabsTrigger>
                 );
@@ -222,7 +222,7 @@ export function PodcastContentPanel({ podcastId, outputs }: PodcastContentPanelP
               variant="outline"
               size="sm"
               onClick={handleExportAll}
-              className="rounded-lg"
+              className="rounded-xl border-border/50 bg-transparent hover:bg-muted/50 text-[13px] font-medium h-9 px-3.5"
             >
               <Download className="h-4 w-4 mr-1.5" />
               Export all
@@ -232,18 +232,18 @@ export function PodcastContentPanel({ podcastId, outputs }: PodcastContentPanelP
                 variant="outline"
                 size="sm"
                 onClick={() => setContentLangOpen(!contentLangOpen)}
-                className="rounded-lg min-w-[100px] justify-between"
+                className="rounded-xl border-border/50 bg-transparent hover:bg-muted/50 min-w-[100px] justify-between h-9 px-3.5 text-[13px] font-medium"
               >
                 <span>{CONTENT_LANGUAGE_OPTIONS.find((o) => o.value === contentLanguage)?.label ?? "Language"}</span>
                 <ChevronDown className="h-4 w-4" />
               </Button>
               {contentLangOpen && (
-                <div className="absolute top-full right-0 mt-1 py-1 bg-card border rounded-lg shadow-lg z-10 min-w-[120px]">
+                <div className="absolute top-full right-0 mt-1.5 py-1 bg-card/95 dark:bg-zinc-900/95 border border-border/50 rounded-xl shadow-xl shadow-black/5 dark:shadow-black/20 backdrop-blur-xl z-10 min-w-[120px]">
                   {CONTENT_LANGUAGE_OPTIONS.map((opt) => (
                     <button
                       key={opt.value || "auto"}
                       type="button"
-                      className="w-full px-3 py-2 text-left text-sm hover:bg-muted rounded"
+                      className="w-full px-3 py-2 text-left text-[13px] hover:bg-muted/80 rounded-lg transition-colors"
                       onClick={() => {
                         setContentLanguage(opt.value);
                         setContentLangOpen(false);
@@ -260,18 +260,18 @@ export function PodcastContentPanel({ podcastId, outputs }: PodcastContentPanelP
                 variant="outline"
                 size="sm"
                 onClick={() => setToneOpen(!toneOpen)}
-                className="rounded-lg min-w-[120px] justify-between"
+                className="rounded-xl border-border/50 bg-transparent hover:bg-muted/50 min-w-[120px] justify-between h-9 px-3.5 text-[13px] font-medium"
               >
                 <span>{TONE_OPTIONS.find((o) => o.value === tone)?.label ?? "Tone"}</span>
                 <ChevronDown className="h-4 w-4" />
               </Button>
               {toneOpen && (
-                <div className="absolute top-full right-0 mt-1 py-1 bg-card border rounded-lg shadow-lg z-10 min-w-[120px]">
+                <div className="absolute top-full right-0 mt-1.5 py-1 bg-card/95 dark:bg-zinc-900/95 border border-border/50 rounded-xl shadow-xl shadow-black/5 dark:shadow-black/20 backdrop-blur-xl z-10 min-w-[120px]">
                   {TONE_OPTIONS.map((opt) => (
                     <button
                       key={opt.value || "default"}
                       type="button"
-                      className="w-full px-3 py-2 text-left text-sm hover:bg-muted rounded"
+                      className="w-full px-3 py-2 text-left text-[13px] hover:bg-muted/80 rounded-lg transition-colors"
                       onClick={() => {
                         setTone(opt.value);
                         setToneOpen(false);
@@ -288,25 +288,24 @@ export function PodcastContentPanel({ podcastId, outputs }: PodcastContentPanelP
               size="sm"
               onClick={handleRegenerate}
               disabled={regenerating}
-              className="rounded-lg"
+              className="rounded-xl border-border/50 bg-transparent hover:bg-muted/50 h-9 px-3.5 text-[13px] font-medium"
             >
               <RefreshCw className={cn("h-4 w-4 mr-1.5", regenerating && "animate-spin")} />
               Regenerate
             </Button>
           </div>
         </div>
-      </div>
 
-      <TabsContent value="blog" className="mt-6 space-y-4">
+      <TabsContent value="blog" className="mt-8 space-y-4">
         <div className="flex flex-wrap justify-end gap-2">
           {blog && (
             <>
-              <CopyButton text={blog.content || ""} label="Copy blog" />
+              <CopyButton text={blog.content || ""} label="Copy blog" className="rounded-xl text-[13px] font-medium" />
             </>
           )}
         </div>
         {blog ? (
-          <div className="rounded-2xl border border-border/80 bg-card shadow-sm overflow-hidden">
+          <div className="rounded-2xl bg-card/80 dark:bg-white/[0.03] border border-border/40 shadow-[0_1px_2px_rgba(0,0,0,0.04)] dark:shadow-none overflow-hidden">
             <BlogEditor
               content={blog.content || ""}
               outputId={blog.id}
@@ -318,24 +317,25 @@ export function PodcastContentPanel({ podcastId, outputs }: PodcastContentPanelP
         )}
       </TabsContent>
 
-      <TabsContent value="twitter" className="mt-6 space-y-4">
+      <TabsContent value="twitter" className="mt-8 space-y-4">
         <div className="flex justify-end">
           {tweets.length > 0 && (
             <CopyButton
               text={tweets.map((t, i) => `${i + 1}. ${t.content || ""}`).join("\n\n")}
               label="Copy all tweets"
+              className="rounded-xl text-[13px] font-medium"
             />
           )}
         </div>
         {tweets.length > 0 ? (
-          <ul className="space-y-4">
+          <ul className="space-y-3">
             {tweets.map((t, i) => (
               <li
                 key={t.id}
-                className="rounded-2xl border border-border/80 bg-card p-5 shadow-sm flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3"
+                className="rounded-2xl bg-card/80 dark:bg-white/[0.03] border border-border/40 p-6 shadow-[0_1px_2px_rgba(0,0,0,0.04)] dark:shadow-none flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3"
               >
-                <p className="text-sm text-foreground flex-1 whitespace-pre-wrap">{t.content}</p>
-                <CopyButton text={t.content || ""} label={`Copy tweet ${i + 1}`} className="shrink-0 rounded-lg" />
+                <p className="text-[15px] text-foreground/95 flex-1 whitespace-pre-wrap leading-[1.65]">{t.content}</p>
+                <CopyButton text={t.content || ""} label={`Copy tweet ${i + 1}`} className="shrink-0 rounded-xl text-[13px] font-medium" />
               </li>
             ))}
           </ul>
@@ -344,94 +344,94 @@ export function PodcastContentPanel({ podcastId, outputs }: PodcastContentPanelP
         )}
       </TabsContent>
 
-      <TabsContent value="linkedin" className="mt-6">
+      <TabsContent value="linkedin" className="mt-8">
         <div className="flex justify-end gap-2 mb-2">
-          {linkedin && <CopyButton text={linkedin.content || ""} label="Copy LinkedIn" />}
+          {linkedin && <CopyButton text={linkedin.content || ""} label="Copy LinkedIn" className="rounded-xl text-[13px] font-medium" />}
         </div>
         {linkedin ? (
-          <div className="rounded-2xl border border-border/80 bg-card p-6 shadow-sm">
-            <p className="text-sm text-foreground whitespace-pre-wrap leading-relaxed">{linkedin.content}</p>
+          <div className="rounded-2xl bg-card/80 dark:bg-white/[0.03] border border-border/40 p-8 shadow-[0_1px_2px_rgba(0,0,0,0.04)] dark:shadow-none">
+            <p className="text-[15px] text-foreground/95 whitespace-pre-wrap leading-[1.65]">{linkedin.content}</p>
           </div>
         ) : (
           <p className="text-muted-foreground text-sm">No LinkedIn post yet.</p>
         )}
       </TabsContent>
 
-      <TabsContent value="transcript" className="mt-6">
+      <TabsContent value="transcript" className="mt-8">
         <div className="flex justify-end gap-2 mb-2">
-          {transcript && <CopyButton text={transcript.content || ""} label="Copy transcript" />}
+          {transcript && <CopyButton text={transcript.content || ""} label="Copy transcript" className="rounded-xl text-[13px] font-medium" />}
         </div>
         {renderContent(transcript?.content ?? null)}
       </TabsContent>
 
-      <TabsContent value="show_notes" className="mt-6">
+      <TabsContent value="show_notes" className="mt-8">
         <div className="flex justify-end gap-2 mb-2">
-          {show_notes && <CopyButton text={show_notes.content || ""} label="Copy show notes" />}
+          {show_notes && <CopyButton text={show_notes.content || ""} label="Copy show notes" className="rounded-xl text-[13px] font-medium" />}
         </div>
         {renderContent(show_notes?.content ?? null)}
       </TabsContent>
 
-      <TabsContent value="key_takeaways" className="mt-6">
+      <TabsContent value="key_takeaways" className="mt-8">
         <div className="flex justify-end gap-2 mb-2">
-          {key_takeaways && <CopyButton text={key_takeaways.content || ""} label="Copy takeaways" />}
+          {key_takeaways && <CopyButton text={key_takeaways.content || ""} label="Copy takeaways" className="rounded-xl text-[13px] font-medium" />}
         </div>
         {renderContent(key_takeaways?.content ?? null)}
       </TabsContent>
 
-      <TabsContent value="quotes" className="mt-6">
+      <TabsContent value="quotes" className="mt-8">
         <div className="flex justify-end gap-2 mb-2">
-          {quotes && <CopyButton text={quotes.content || ""} label="Copy quotes" />}
+          {quotes && <CopyButton text={quotes.content || ""} label="Copy quotes" className="rounded-xl text-[13px] font-medium" />}
         </div>
         {renderContent(quotes?.content ?? null)}
       </TabsContent>
 
-      <TabsContent value="newsletter" className="mt-6">
+      <TabsContent value="newsletter" className="mt-8">
         <div className="flex justify-end gap-2 mb-2">
-          {newsletter && <CopyButton text={newsletter.content || ""} label="Copy newsletter" />}
+          {newsletter && <CopyButton text={newsletter.content || ""} label="Copy newsletter" className="rounded-xl text-[13px] font-medium" />}
         </div>
         {renderContent(newsletter?.content ?? null)}
       </TabsContent>
 
-      <TabsContent value="instagram" className="mt-6">
+      <TabsContent value="instagram" className="mt-8">
         <div className="flex justify-end gap-2 mb-2">
-          {instagram && <CopyButton text={instagram.content || ""} label="Copy Instagram" />}
+          {instagram && <CopyButton text={instagram.content || ""} label="Copy Instagram" className="rounded-xl text-[13px] font-medium" />}
         </div>
         {renderContent(instagram?.content ?? null)}
       </TabsContent>
 
-      <TabsContent value="youtube_description" className="mt-6">
+      <TabsContent value="youtube_description" className="mt-8">
         <div className="flex justify-end gap-2 mb-2">
           {youtube_description && (
-            <CopyButton text={youtube_description.content || ""} label="Copy YouTube description" />
+            <CopyButton text={youtube_description.content || ""} label="Copy YouTube description" className="rounded-xl text-[13px] font-medium" />
           )}
         </div>
         {renderContent(youtube_description?.content ?? null)}
       </TabsContent>
 
-      <TabsContent value="seo_keywords" className="mt-6">
+      <TabsContent value="seo_keywords" className="mt-8">
         <div className="flex justify-end gap-2 mb-2">
-          {seo_keywords && <CopyButton text={seo_keywords.content || ""} label="Copy keywords" />}
+          {seo_keywords && <CopyButton text={seo_keywords.content || ""} label="Copy keywords" className="rounded-xl text-[13px] font-medium" />}
         </div>
         {renderContent(seo_keywords?.content ?? null)}
       </TabsContent>
 
-      <TabsContent value="email_subject" className="mt-6">
+      <TabsContent value="email_subject" className="mt-8">
         <div className="flex justify-end gap-2 mb-2">
-          {email_subject && <CopyButton text={email_subject.content || ""} label="Copy subject" />}
+          {email_subject && <CopyButton text={email_subject.content || ""} label="Copy subject" className="rounded-xl text-[13px] font-medium" />}
         </div>
         {renderContent(email_subject?.content ?? null)}
       </TabsContent>
 
-      <TabsContent value="twitter_thread" className="mt-6">
+      <TabsContent value="twitter_thread" className="mt-8">
         <div className="flex justify-end gap-2 mb-2">
-          {twitter_thread && <CopyButton text={twitter_thread.content || ""} label="Copy thread" />}
+          {twitter_thread && <CopyButton text={twitter_thread.content || ""} label="Copy thread" className="rounded-xl text-[13px] font-medium" />}
         </div>
         {renderContent(twitter_thread?.content ?? null)}
       </TabsContent>
 
-      <TabsContent value="headlines" className="mt-6">
+      <TabsContent value="headlines" className="mt-8">
         <div className="flex justify-end gap-2 mb-2">
-          {headlines && <CopyButton text={headlines.content || ""} label="Copy headlines" />}
+          {headlines && <CopyButton text={headlines.content || ""} label="Copy headlines" className="rounded-xl text-[13px] font-medium" />}
         </div>
         {renderContent(headlines?.content ?? null)}
       </TabsContent>
