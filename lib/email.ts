@@ -29,8 +29,9 @@ export async function sendEmail(options: SendEmailOptions): Promise<{ ok: boolea
       subject: options.subject,
       text: options.text ?? "",
       ...(options.html ? { html: options.html } : {}),
-    } as { from: string; to: string[]; subject: string; text: string; html?: string };
-    const { error } = await resend.emails.send(payload);
+    };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Resend union type requires template OR content; we provide content
+    const { error } = await resend.emails.send(payload as any);
     if (error) return { ok: false, error: error.message };
     return { ok: true };
   } catch (e) {
