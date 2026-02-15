@@ -285,6 +285,30 @@ To send emails (e.g. “processing complete” or newsletter campaigns):
 
 ---
 
+### Why you might see an old version
+
+- **Browser cache:** Do a hard refresh (Ctrl+Shift+R or Cmd+Shift+R) or clear cache for the site.
+- **Vercel deployment:** In Vercel → **Deployments**, confirm the latest deployment is from the latest commit on `main`. If you see an old UI, trigger a new deploy (push a commit or click **Redeploy** on the latest).
+- **CDN cache:** Vercel edge cache can take a few minutes to update; wait and hard refresh.
+
+---
+
+### SEO (production)
+
+- Set **`NEXT_PUBLIC_SITE_URL`** in Vercel env to your live URL (e.g. `https://pod-script.vercel.app`). This is used for canonical URLs, sitemap, and Open Graph.
+- The app includes: **meta title/description**, **Open Graph** and **Twitter Card** tags, **robots.txt**, **sitemap.xml**, **JSON-LD** (WebSite + Organization), and **keywords**. Submit your sitemap in [Google Search Console](https://search.google.com/search-console) after going live.
+
+---
+
+### Verify Stripe & Vercel
+
+- **Vercel:** Project is **Ready**; env vars match `.env.local` (Supabase, OpenAI, Resend, Stripe, `NEWSLETTER_SEND_SECRET`). **Deployments** use the latest commit from `main`.
+- **Stripe:** In **Developers → Webhooks**, the production endpoint URL is `https://your-vercel-url.vercel.app/api/webhooks/stripe`, event **checkout.session.completed**, and the **Signing secret** is set in Vercel as `STRIPE_WEBHOOK_SECRET`.
+- **Stripe checkout:** On the live site, **Dashboard → Pricing** (or **Profile → Upgrade plan**) opens Stripe Checkout. After a test payment, **Profile** should show **Plan: Pro** and **100** tokens (webhook must be receiving events).
+- **Trial tokens:** New accounts and trial users should see **3 tokens** and **Limit: 3 / month**. If you see 10, run **`supabase/migrations/008_trial_tokens_three.sql`** in the Supabase SQL Editor once.
+
+---
+
 ## If something goes wrong
 
 - **“OPENAI_API_KEY is not set”**  

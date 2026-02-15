@@ -123,3 +123,17 @@
 .tiptap strong {
   @apply font-bold;
 }
+
+/* Content tab bar: thin scrollbar */
+.content-tabs-scroll {
+  scrollbar-gutter: stable;
+}
+.content-tabs-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+.content-tabs-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.content-tabs-scroll::-webkit-scrollbar-thumb {
+  @apply rounded-full bg-muted-foreground/25 hover:bg-muted-foreground/40;
+}

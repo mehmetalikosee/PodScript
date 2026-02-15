@@ -192,27 +192,32 @@ export function PodcastContentPanel({ podcastId, outputs }: PodcastContentPanelP
   return (
     <Tabs defaultValue="blog" className="w-full">
       <div className="flex flex-col gap-4 mb-4">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <TabsList className="inline-flex h-11 w-auto max-w-full overflow-x-auto rounded-xl bg-muted/60 p-1 flex-nowrap">
-            {TAB_CONFIG.map((t) => {
-              const hasContent =
-                t.value === "tweet"
-                  ? tweets.length > 0
-                  : (byType[t.value]?.[0]?.content ?? "").length > 0;
-              const Icon = t.icon;
-              return (
-                <TabsTrigger
-                  key={t.value}
-                  value={t.value}
-                  className="rounded-lg flex items-center gap-1.5 shrink-0 data-[state=active]:bg-background data-[state=active]:shadow-sm"
-                >
-                  <Icon className="h-4 w-4" />
-                  <span className="hidden sm:inline">{t.label}</span>
-                </TabsTrigger>
-              );
-            })}
-          </TabsList>
-          <div className="flex items-center gap-2 flex-wrap">
+        {/* Tab bar: full-width scrollable row */}
+        <div className="w-full border border-border/80 rounded-2xl bg-card/50 overflow-hidden">
+          <div className="content-tabs-scroll overflow-x-auto overflow-y-hidden scroll-smooth">
+            <TabsList className="inline-flex h-12 w-max min-w-full items-center gap-1.5 rounded-2xl bg-transparent p-2 pr-8 border-0 h-auto">
+              {TAB_CONFIG.map((t) => {
+                const Icon = t.icon;
+                return (
+                  <TabsTrigger
+                    key={t.value}
+                    value={t.value}
+                    className={cn(
+                      "rounded-xl px-4 py-2.5 h-auto flex items-center gap-2 shrink-0 text-sm font-medium transition-colors",
+                      "text-muted-foreground hover:text-foreground hover:bg-muted/80",
+                      "data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-sm data-[state=active]:hover:bg-primary data-[state=active]:hover:text-primary-foreground"
+                    )}
+                  >
+                    <Icon className="h-4 w-4 shrink-0" />
+                    <span>{t.label}</span>
+                  </TabsTrigger>
+                );
+              })}
+            </TabsList>
+          </div>
+        </div>
+        {/* Actions row */}
+        <div className="flex flex-wrap items-center justify-end gap-2">
             <Button
               variant="outline"
               size="sm"

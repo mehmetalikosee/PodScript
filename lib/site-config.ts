@@ -2,6 +2,9 @@
 
 export const SITE_NAME = "PodScript";
 
+/** Canonical base URL for SEO (no trailing slash) */
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://pod-script.vercel.app";
+
 export const SUPPORT_WHATSAPP = "+971 50 608 63 90";
 const WHATSAPP_NUMBER = SUPPORT_WHATSAPP.replace(/\s/g, "").replace(/^\+/, "");
 export const SUPPORT_WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}`;

@@ -23,7 +23,7 @@ export default async function ProfilePage() {
       phone={profile?.phone ?? ""}
       avatarUrl={profile?.avatar_url ?? null}
       tokensRemaining={profile?.tokens_remaining ?? 0}
-      tokensLimit={profile?.tokens_limit ?? 10}
+      tokensLimit={profile?.tokens_limit ?? 3}
       plan={profile?.plan ?? "trial"}
       trialEndsAt={profile?.trial_ends_at ?? null}
     />
